@@ -1,0 +1,179 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    background-color: #050507;
+    color: #e8e8f0;
+    font-family: 'DM Sans', sans-serif;
+    overflow-x: hidden;
+  }
+
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: #0c0c10; }
+  ::-webkit-scrollbar-thumb {
+    /* Findora brand gradient on scrollbar */
+    background: linear-gradient(180deg, #4fc3f7, #7c6aff);
+    border-radius: 2px;
+  }
+  ::-webkit-scrollbar-thumb:hover { background: #f06292; }
+
+  ::selection {
+    background: rgba(124, 106, 255, 0.3);
+    color: #e8e8f0;
+  }
+}
+
+@layer components {
+  /* Glass card — unchanged */
+  .glass {
+    background: rgba(18, 18, 24, 0.7);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .glass-strong {
+    background: rgba(24, 24, 31, 0.9);
+    backdrop-filter: blur(40px);
+    -webkit-backdrop-filter: blur(40px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  /* Shimmer skeleton */
+  .skeleton {
+    background: linear-gradient(90deg, #1e1e28 0%, #2a2a38 50%, #1e1e28 100%);
+    background-size: 200% 100%;
+    animation: shimmer 1.8s ease infinite;
+  }
+
+  /* ── Findora brand gradient text (was violet→teal, now blue→violet→pink) ── */
+  .gradient-text {
+    background: linear-gradient(135deg, #4fc3f7 0%, #7c6aff 55%, #f06292 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Input focus ring — unchanged */
+  .input-focus {
+    @apply outline-none ring-0 border border-border bg-card text-ink placeholder-ink-dim;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .input-focus:focus {
+    border-color: rgba(79, 195, 247, 0.5);
+    box-shadow: 0 0 0 3px rgba(79, 195, 247, 0.08), inset 0 0 0 1px rgba(124, 106, 255, 0.2);
+  }
+
+  /* ── Primary button — Findora brand gradient ───────────────────────────── */
+  .btn-primary {
+    @apply text-white font-display font-semibold;
+    background: linear-gradient(135deg, #4fc3f7 0%, #7c6aff 55%, #f06292 100%);
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .btn-primary::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.12), transparent);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .btn-primary:hover::after { opacity: 1; }
+  .btn-primary:hover {
+    box-shadow: 0 4px 24px rgba(79, 195, 247, 0.3), 0 4px 24px rgba(124, 106, 255, 0.25);
+    transform: translateY(-1px);
+  }
+  .btn-primary:active { transform: translateY(0); }
+
+  .btn-ghost {
+    @apply text-ink-muted;
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.08);
+    transition: all 0.2s ease;
+  }
+  .btn-ghost:hover {
+    background: rgba(255,255,255,0.05);
+    border-color: rgba(255,255,255,0.15);
+    color: #e8e8f0;
+  }
+
+  /* Nav link active */
+  .nav-active {
+    background: rgba(79, 195, 247, 0.08);
+    color: #4fc3f7;
+    border-right: 2px solid;
+    /* gradient border via background trick */
+    border-image: linear-gradient(180deg, #4fc3f7, #7c6aff) 1;
+  }
+
+  /* Score badge */
+  .score-badge {
+    background: linear-gradient(135deg, rgba(79, 195, 247, 0.15), rgba(124, 106, 255, 0.1));
+    border: 1px solid rgba(79, 195, 247, 0.25);
+  }
+
+  /* Tag chips */
+  .tag-chip {
+    @apply text-xs font-body px-2 py-0.5 rounded-full;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+
+  /* Orb background effect */
+  .orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Summary card highlight */
+  .summary-card {
+    background: linear-gradient(135deg, rgba(79, 195, 247, 0.06), rgba(124, 106, 255, 0.04));
+    border: 1px solid rgba(79, 195, 247, 0.18);
+    border-left: 3px solid #4fc3f7;
+  }
+
+  /* ── Findora logo ring pulse ────────────────────────────────────────────── */
+  .logo-ring {
+    animation: logoRing 3s ease-in-out infinite;
+  }
+
+  @keyframes logoRing {
+    0%, 100% { opacity: 0.4; transform: scale(1); }
+    50%       { opacity: 0.75; transform: scale(1.04); }
+  }
+}
+
+@layer utilities {
+  .text-balance { text-wrap: balance; }
+
+  .hover-lift {
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  .hover-lift:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+  }
+
+  .hover-glow:hover {
+    box-shadow: 0 0 30px rgba(79, 195, 247, 0.18);
+  }
+}

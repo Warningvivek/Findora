@@ -1,0 +1,21 @@
+version: "3.9"
+
+services:
+  backend:
+    build: ./backend
+    container_name: memory_backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./uploads:/app/uploads
+      - ./faiss_indexes:/app/faiss_indexes
+    restart: always
+
+  frontend:
+    build: ./frontend-ui
+    container_name: memory_frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    restart: always
